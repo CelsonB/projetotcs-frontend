@@ -63,8 +63,18 @@ export class AuthService {
 
   // Logout do usuário
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']); // Redireciona para a página de login
+ 
+    const body = {};
+    this.http.post(`${this.apiUrl}/logout`,body ).subscribe(
+      (response: any) => {
+          localStorage.removeItem(this.tokenKey);
+          alert('logout realizado com sucesso');
+          this.router.navigate(['/login']);
+      }
+
+
+    );
+     
   }
 
 }
