@@ -1,0 +1,59 @@
+<div class="perfil-container">
+    <h2>Perfil do Usuário</h2>
+    <form [formGroup]="perfilForm" (ngSubmit)="savePerfil()">
+      <!-- Nome -->
+      <div class="form-group">
+        <label for="name">Nome:</label>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          [readonly]="!isEditMode"
+        />
+        <small *ngIf="perfilForm.get('name')?.invalid && perfilForm.get('name')?.touched">
+          O nome deve ter pelo menos 3 caracteres.
+        </small>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          [readonly]="true"
+        />
+      </div>
+  
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="password">Senha:</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          [readonly]="!isEditMode"
+        />
+        <small *ngIf="perfilForm.get('password')?.invalid && perfilForm.get('password')?.touched">
+          A senha deve ter pelo menos 6 caracteres.
+        </small>
+      </div>
+  
+      <!-- Botões -->
+      <div class="form-actions">
+        <button type="button" (click)="toggleEditMode()">
+          {{ isEditMode ? 'Cancelar' : 'Editar' }}
+        </button>
+       
+
+        <button type="submit" [disabled]="!isEditMode">
+          Salvar
+        </button>
+        <button type="button" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </form>
+  </div>
+  
