@@ -1,0 +1,42 @@
+// Variáveis para cores e estilos reutilizáveis
+$primary-color: #007bff;
+$background-color: #f9f9f9;
+$border-color: #ddd;
+$text-color: #333;
+
+// Estilo principal para a lista de usuários
+h1 {
+  text-align: center;
+  color: black;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none; // Remove os marcadores padrão
+  padding: 0;
+
+  li {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    background-color: $background-color;
+    color: $text-color;
+
+    // Adiciona sombra suave aos itens
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    // Diferenciação visual para itens alternados
+    &:nth-child(odd) {
+      background-color: lighten($background-color, 5%);
+    }
+
+    &:nth-child(even) {
+      background-color: darken($background-color, 5%);
+    }
+
+    // Torna os itens interativos ao passar o mouse
+
+  }
+}

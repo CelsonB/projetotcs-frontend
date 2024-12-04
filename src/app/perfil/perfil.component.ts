@@ -4,12 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { UsuariosService } from '../services/usuarios.service';
 
 @Component({
   selector: 'app-perfil',
+  imports: [ReactiveFormsModule ,CommonModule],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss'],
-  imports: [ReactiveFormsModule ,CommonModule],
+  
 })
 
 
@@ -19,8 +22,9 @@ export class PerfilComponent implements OnInit {
   perfilForm: FormGroup;
   isEditMode: boolean = false;
   apiUrl: string = `${environment.apiUrl}/usuarios`;
+  usuarioLogado: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService) {
+  constructor(private usuariosService: UsuariosService,private fb: FormBuilder, private http: HttpClient, private authService: AuthService, private router: Router) {
     this.perfilForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +36,24 @@ export class PerfilComponent implements OnInit {
 
   logout(){
     this.authService.logout();
+  }
+
+  deletarUsuario(): void {
+    const email = this.authService.getUserEmail();
+
+    if (!email) {
+      alert('Erro: Usuário não autenticado.');
+      return;
+    }
+    
+    if (confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
+      this.usuariosService.deletarUsuario(email).subscribe(
+        (response:any) => {
+          alert('Usuário deletado com sucesso!');
+          this.router.navigate(['/login']);
+        }
+      );
+    }
   }
   
 
@@ -67,10 +89,10 @@ export class PerfilComponent implements OnInit {
   savePerfil(): void {
     if (this.perfilForm.valid) {
       const updatedData = this.perfilForm.value;
+
       const email = this.authService.getUserEmail();
 
-      const body = {"email": email, "senha": updatedData.password, "nome": updatedData.name};
-
+      const body = {"senha": updatedData.password, "nome": updatedData.name};
       console.log('Dados atualizados:', body);
       this.http.put(`${this.apiUrl}/${email}`,body).subscribe(  (response: any) => {
           alert(response);

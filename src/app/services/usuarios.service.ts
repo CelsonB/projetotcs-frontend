@@ -26,4 +26,11 @@ export class UsuariosService {
      return this.http.post(this.apiUrl, usuario);
   }
 
+
+  deletarUsuario(email: string): Observable<any> {
+    const url = `${this.apiUrl}/${email}`;
+    return this.http.delete(url);
+  }
+  
+
 }

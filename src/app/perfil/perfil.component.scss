@@ -1,58 +1,64 @@
-// Variáveis de cores
-$primary-color: #4caf50;
-$secondary-color: #ffffff;
-$background-color: #f5f5f5;
-$border-color: #ddd;
-$error-color: #e53935;
+// Variáveis para cores e estilos reutilizáveis
+$primary-color: #007bff;
+$primary-hover-color: #0056b3;
+$error-color: #d9534f;
+$background-color: #f9f9f9;
+$border-color: #ccc;
+$text-color: #333;
+$button-radius: 5px;
 
-.profile-container {
+// Estilo para o container do perfil
+.perfil-container {
   max-width: 500px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: $secondary-color;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid $border-color;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: $background-color;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
   h2 {
     text-align: center;
     color: $primary-color;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
   }
 
   form {
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 20px;
 
       label {
         display: block;
+        margin-bottom: 5px;
         font-weight: bold;
-        margin-bottom: 0.5rem;
-        color: #333;
+        color: $text-color;
       }
 
       input {
         width: 100%;
-        padding: 0.8rem;
+        padding: 10px;
         border: 1px solid $border-color;
         border-radius: 5px;
+        box-sizing: border-box;
         font-size: 1rem;
 
         &:focus {
-          border-color: $primary-color;
           outline: none;
-          box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
+          border-color: $primary-color;
+          box-shadow: 0 0 5px $primary-color;
         }
 
         &[readonly] {
-          background-color: #f9f9f9;
-          color: #666;
+          background-color: #e9ecef;
+          cursor: not-allowed;
         }
       }
 
       small {
         color: $error-color;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        margin-top: 5px;
         display: block;
       }
     }
@@ -60,38 +66,42 @@ $error-color: #e53935;
     .form-actions {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-top: 2rem;
+      gap: 10px;
 
       button {
-        padding: 0.8rem 1.5rem;
+        flex: 1;
+        padding: 10px;
         font-size: 1rem;
         border: none;
-        border-radius: 5px;
+        border-radius: $button-radius;
         cursor: pointer;
-        transition: all 0.3s ease;
 
-        &.edit {
+        &:nth-child(1) {
           background-color: $primary-color;
-          color: $secondary-color;
+          color: white;
 
           &:hover {
-            background-color: darken($primary-color, 10%);
+            background-color: $primary-hover-color;
           }
         }
 
-        &.save {
-          background-color: #2196f3;
-          color: $secondary-color;
+        &:nth-child(2) {
+          background-color: $primary-hover-color;
+          color: white;
 
-          &:hover {
-            background-color: darken(#2196f3, 10%);
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
           }
         }
 
-        &:disabled {
-          background-color: #ccc;
-          cursor: not-allowed;
+        &:nth-child(3) {
+          background-color: #dc3545; // Cor de alerta para logout
+          color: white;
+
+          &:hover {
+            background-color: darken(#dc3545, 10%);
+          }
         }
       }
     }

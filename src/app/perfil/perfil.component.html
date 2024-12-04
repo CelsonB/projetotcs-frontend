@@ -41,7 +41,10 @@
       </div>
   
       <!-- Botões -->
+       
       <div class="form-actions">
+
+        
         <button type="button" (click)="toggleEditMode()">
           {{ isEditMode ? 'Cancelar' : 'Editar' }}
         </button>
@@ -50,9 +53,16 @@
         <button type="submit" [disabled]="!isEditMode">
           Salvar
         </button>
+        
+        <button type="button" (click)="deletarUsuario()">
+          Deletar
+        </button>
+
+
         <button type="button" (click)="logout()">
           Logout
         </button>
+
       </div>
     </form>
   </div>

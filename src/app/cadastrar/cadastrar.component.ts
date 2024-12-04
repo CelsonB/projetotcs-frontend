@@ -17,7 +17,7 @@ export class CadastroComponent {
     this.cadastroForm = this.fb.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]]
+      senha: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
@@ -26,7 +26,11 @@ export class CadastroComponent {
       const usuario: Usuario = this.cadastroForm.value;
       this.usuarioService.cadastrarUsuario(usuario).subscribe(response => {
         console.log(response.message);
-        // Aqui você pode adicionar lógica para redirecionar ou mostrar uma mensagem de sucesso
+        
+        
+
+
+
       }, error => {
         console.error('Erro ao cadastrar usuário:', error);
       });
