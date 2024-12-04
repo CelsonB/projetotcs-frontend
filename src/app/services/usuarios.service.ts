@@ -22,7 +22,6 @@ export class UsuariosService {
   }
 
   cadastrarUsuario(usuario: Usuario): Observable<any> {
-    
      return this.http.post(this.apiUrl, usuario);
   }
 
@@ -31,6 +30,6 @@ export class UsuariosService {
     const url = `${this.apiUrl}/${email}`;
     return this.http.delete(url);
   }
-  
+
 
 }
