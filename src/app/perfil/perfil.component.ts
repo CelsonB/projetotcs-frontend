@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environment';
@@ -24,7 +23,7 @@ export class PerfilComponent implements OnInit {
   apiUrl: string = `${environment.apiUrl}/usuarios`;
   usuarioLogado: any;
 
-  constructor(private usuariosService: UsuariosService,private fb: FormBuilder, private http: HttpClient, private authService: AuthService, private router: Router) {
+  constructor(private usuariosService: UsuariosService,private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.perfilForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -45,7 +44,6 @@ export class PerfilComponent implements OnInit {
       alert('Erro: Usuário não autenticado.');
       return;
     }
-    
     if (confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
       this.usuariosService.deletarUsuario(email).subscribe(
         (response:any) => {
@@ -67,7 +65,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadPerfil(email: string): void {
-    this.http.get(`${this.apiUrl}/${email}`).subscribe(
+    this.usuariosService.getUsuarioEmail(email).subscribe(
       (data: any) => {
         this.perfilForm.patchValue({
           name: data.nome,
@@ -88,14 +86,16 @@ export class PerfilComponent implements OnInit {
 
   savePerfil(): void {
     if (this.perfilForm.valid) {
+
       const updatedData = this.perfilForm.value;
-
       const email = this.authService.getUserEmail();
-
       const body = {"senha": updatedData.password, "nome": updatedData.name};
+
       console.log('Dados atualizados:', body);
-      this.http.put(`${this.apiUrl}/${email}`,body).subscribe(  (response: any) => {
+
+      this.usuariosService.updateUsuario(email,body).subscribe(  (response: any) => {
           alert(response);
+
       }
     );
 
