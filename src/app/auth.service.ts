@@ -26,7 +26,15 @@ export class AuthService {
           alert('login realizado com sucesso');
           this.setToken(response.token);
           this.setUserEmail(email);
-          this.router.navigate(['/perfil']); 
+          
+          if (response.Admin) {
+            alert('Bem-vindo, administrador!');
+            this.router.navigate(['/lista']); // Redirecionar para a área de admin
+          } else {
+            this.router.navigate(['/perfil']); // Redirecionar para o perfil normal
+          }
+
+
         }
       },
       (error) => {

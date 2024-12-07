@@ -29,7 +29,7 @@ export class UsuariosService {
     let headers = new HttpHeaders();
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`); // Adiciona o token no cabeçalho Authorization
-    }
+    } 
     return headers;
   }
 
