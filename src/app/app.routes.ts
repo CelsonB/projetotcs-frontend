@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ListaDePerfisComponent } from './lista-de-perfis/lista-de-perfis.component';
 import { CadastroComponent } from './cadastrar/cadastrar.component';
+import { CategoriasComponent } from './categorias/categorias.component';
 
 
 export const routes: Routes = [
@@ -11,6 +12,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'perfil', component: PerfilComponent },
     { path: 'lista', component:ListaDePerfisComponent},
-    { path: 'cadastrar', component:CadastroComponent}
+    { path: 'cadastrar', component:CadastroComponent},
+    { path: 'categorias',component:CategoriasComponent }
     
 ];

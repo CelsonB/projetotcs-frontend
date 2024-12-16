@@ -4,9 +4,19 @@ import { AuthService } from '../auth.service';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
+
+export interface Categoria {
+  nome: string;
+  id: number; 
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class CategoriaService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
@@ -25,13 +35,13 @@ export class CategoriaService {
       return headers;
     }
     
-  getCategorias(): Observable<String[]> {
+  getCategorias(): Observable<Categoria[]> {
     const headers = this.getHeaders();
-    return this.http.get<String[]>(this.apiUrl, {headers}); //get usuarios com header
+    return this.http.get<Categoria[]>(this.apiUrl, {headers}); //get usuarios com header
 
   }
 
-  cadastrarCategoria(categoria: String){
+  cadastrarCategoria(categoria: string){
     const headers = this.getHeaders();
     return this.http.post(this.apiUrl, categoria,{headers});//cadastrar categorias
 
@@ -42,13 +52,14 @@ export class CategoriaService {
 
   getCategoriaId(id : Number): Observable<String> {
     const headers = this.getHeaders();
-    return this.http.get<String>(`${this.apiUrl}/${id}`,{headers});
+    return this.http.get<string>(`${this.apiUrl}/${id}`,{headers});
 
   }
 
 
-  deletarUsuario(id : Number): Observable<any> {
+  deletarCategoria(id : Number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
+    console.log(url);
     const headers = this.getHeaders();
     return this.http.delete(url,{headers});//deletar com o header 
 

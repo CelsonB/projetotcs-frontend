@@ -1,0 +1,15 @@
+<h2>Categorias</h2>
+
+<!-- Formulário para adicionar nova categoria -->
+<div>
+  <input type="text" [(ngModel)]="novaCategoria" placeholder="Adicionar nova categoria" />
+  <button (click)="adicionarCategoria()">Adicionar</button>
+</div>
+
+<!-- Lista de categorias -->
+<ul>
+  <li *ngFor="let categoria of categorias; let i = index">
+    {{ categoria.nome }}
+    <button (click)="deletarCategoria(categoria.id)">Deletar</button>
+  </li>
+</ul>
