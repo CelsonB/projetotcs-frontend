@@ -60,7 +60,6 @@ export class UsuariosService {
 
     const url = `${this.apiUrl}/${email}`;
     const headers = this.getHeaders();
-
     return this.http.delete(url,{headers});//deletar com o header 
   }
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -71,16 +71,26 @@ export class AuthService {
 
   // Logout do usuário
   logout(): void {
- 
+    
+        const token = this.getToken();
+        console.log(token);
+        let headers = new HttpHeaders();
+        if (token) {
+          headers = headers.set('Authorization', `Bearer ${token}`); // Adiciona o token no cabeçalho Authorization
+        } 
+
+
     const body = {};
-    this.http.post(`${this.apiUrl}/logout`,body ).subscribe(
+    this.http.post(`${this.apiUrl}/logout`,body,{headers}).subscribe(
       (response: any) => {
           localStorage.removeItem(this.tokenKey);
           alert('logout realizado com sucesso');
           this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Erro ao deslogar:', error);
+        alert('Não foi possível deslogar');
       }
-
-
     );
      
   }
