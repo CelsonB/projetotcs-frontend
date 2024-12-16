@@ -7,10 +7,18 @@
     <button (click)="adicionarCategoria()">Adicionar</button>
   </div>
 
+  <!-- Formulário para atualizar categoria existente -->
+  <div class="atualiza-categoria" *ngIf="categoriaParaAtualizar">
+    <input type="text" [(ngModel)]="categoriaParaAtualizar.nome" placeholder="Atualizar categoria" />
+    <button (click)="atualizarCategoria()">Atualizar</button>
+    <button (click)="cancelarAtualizacao()">Cancelar</button>
+  </div>
+
   <!-- Lista de categorias -->
   <ul class="categorias-list">
     <li *ngFor="let categoria of categorias; let i = index" class="categoria-item">
       {{ categoria.nome }}
+      <button (click)="prepararAtualizacao(categoria)">Atualizar</button>
       <button (click)="deletarCategoria(categoria.id)">Deletar</button>
     </li>
   </ul>

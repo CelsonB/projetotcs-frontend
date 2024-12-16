@@ -56,6 +56,17 @@ export class CategoriaService {
 
   }
 
+  atualizarCategoria(categoriaAtualizada: Categoria): Observable<any>{
+    const url = `${this.apiUrl}/${categoriaAtualizada.id}`;
+    console.log(url);
+    const headers = this.getHeaders();
+    
+
+    const body = { "nome": categoriaAtualizada.nome};
+
+    return this.http.put(url,body,{headers});//não tenho tempo para testar espero que funcione
+  
+  }
 
   deletarCategoria(id : Number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

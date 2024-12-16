@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 export class CategoriasComponent implements OnInit {
   categorias: Categoria[] = [];
   novaCategoria: string = '';
+  categoriaParaAtualizar: Categoria | null = null;
 
   constructor(private categoriaService: CategoriaService) { }
 
@@ -37,6 +38,28 @@ export class CategoriasComponent implements OnInit {
     );
   }
 
+  
+  prepararAtualizacao(categoria: Categoria): void {
+    this.categoriaParaAtualizar = { ...categoria }; // Cria uma cópia da categoria para edição
+  }
+
+  atualizarCategoria(): void {
+    if (this.categoriaParaAtualizar) {
+      this.categoriaService.atualizarCategoria(this.categoriaParaAtualizar).subscribe(
+        () => {
+          this.categoriaParaAtualizar = null; // Limpa a categoria em edição
+          this.carregarCategorias(); // Recarrega a lista de categorias
+        },
+        (error) => {
+          console.error('Erro ao atualizar categoria', error);
+        }
+      );
+    }
+  }
+
+  cancelarAtualizacao(): void {
+    this.categoriaParaAtualizar = null; // Limpa a categoria em edição
+  }
   adicionarCategoria(): void {
     if (this.novaCategoria.trim()) {
       this.categoriaService.cadastrarCategoria(this.novaCategoria).subscribe(
@@ -50,6 +73,12 @@ export class CategoriasComponent implements OnInit {
       );
     }
   }
+
+  
+
+
+
+
 
   deletarCategoria(id: number): void {
     this.categoriaService.deletarCategoria(id).subscribe(
