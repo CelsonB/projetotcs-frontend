@@ -52,7 +52,6 @@ export class UsuariosService {
 
   updateUsuario(email: string | null, body: { nome: string; senha: string } ): Observable<any>{//olha que coisa linda esse body
     const headers = this.getHeaders();
-
     return this.http.put(`${this.apiUrl}/${email}`,body, {headers});
 
   }
