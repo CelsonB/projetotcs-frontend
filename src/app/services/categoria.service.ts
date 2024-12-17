@@ -43,7 +43,9 @@ export class CategoriaService {
 
   cadastrarCategoria(categoria: string){
     const headers = this.getHeaders();
-    return this.http.post(this.apiUrl, categoria,{headers});//cadastrar categorias
+    const body = {"nome": categoria};
+ 
+    return this.http.post(this.apiUrl, body,{headers});//cadastrar categorias
 
   }
 
@@ -60,8 +62,7 @@ export class CategoriaService {
     const url = `${this.apiUrl}/${categoriaAtualizada.id}`;
     console.log(url);
     const headers = this.getHeaders();
-    
-
+  
     const body = { "nome": categoriaAtualizada.nome};
 
     return this.http.put(url,body,{headers});//não tenho tempo para testar espero que funcione

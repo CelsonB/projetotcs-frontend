@@ -34,6 +34,7 @@ export class CategoriasComponent implements OnInit {
       },
       (error) => {
         console.error('Erro ao carregar categorias', error);
+        alert('Erro ao carregar categorias: ' + (error.error.message || 'Erro desconhecido.'));
       }
     );
   }
@@ -52,6 +53,7 @@ export class CategoriasComponent implements OnInit {
         },
         (error) => {
           console.error('Erro ao atualizar categoria', error);
+          alert('Erro ao atualizar categoria: ' + (error.error.message || 'Erro desconhecido.'));
         }
       );
     }
@@ -60,6 +62,7 @@ export class CategoriasComponent implements OnInit {
   cancelarAtualizacao(): void {
     this.categoriaParaAtualizar = null; // Limpa a categoria em edição
   }
+
   adicionarCategoria(): void {
     if (this.novaCategoria.trim()) {
       this.categoriaService.cadastrarCategoria(this.novaCategoria).subscribe(
@@ -69,6 +72,7 @@ export class CategoriasComponent implements OnInit {
         },
         (error) => {
           console.error('Erro ao cadastrar categoria', error);
+          alert('Erro ao cadastrar categoria: ' + (error.error.message || 'Erro desconhecido.'));
         }
       );
     }
@@ -87,6 +91,7 @@ export class CategoriasComponent implements OnInit {
       },
       (error) => {
         console.error('Erro ao deletar categoria', error);
+        alert('Erro ao cadastrar categoria: ' + (error.error.message || 'Erro desconhecido.'));
       }
     );
   }

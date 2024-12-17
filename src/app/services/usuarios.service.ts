@@ -30,10 +30,13 @@ export class UsuariosService {
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`); // Adiciona o token no cabeçalho Authorization
     } 
+    console.log(headers);
+
     return headers;
   }
 
   getUsuarios(): Observable<Usuario[]> {
+    
     const token = this.auth.getToken();
     const headers = this.getHeaders();
 

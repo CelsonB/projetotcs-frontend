@@ -21,6 +21,7 @@ export class ListaDePerfisComponent implements OnInit{
       },
       (error) => {
         console.error('Erro ao buscar usuários:', error);
+        alert('Erro ao buscar usuários: ' + (error.error.message || 'Erro desconhecido.'));
       }
     );
   }
