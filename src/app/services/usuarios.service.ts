@@ -50,7 +50,7 @@ export class UsuariosService {
 
   getUsuarioEmail(email: string): Observable<Usuario> {
     const headers = this.getHeaders();
-      return this.http.get<Usuario>(`${this.apiUrl}/${email}`,{headers});
+    return this.http.get<Usuario>(`${this.apiUrl}/${email}`,{headers});
   }
 
   updateUsuario(email: string | null, body: { nome: string; senha: string } ): Observable<any>{//olha que coisa linda esse body
