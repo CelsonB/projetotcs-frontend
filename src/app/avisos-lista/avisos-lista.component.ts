@@ -27,7 +27,7 @@ export class AvisosListaComponent implements OnInit {
   constructor(private avisoService: AvisoService, private categoriaService: CategoriaService) {}
 
   ngOnInit() {
-    this.carregarCategorias();
+    //this.carregarCategorias();
   }
 
   carregarCategorias() {
