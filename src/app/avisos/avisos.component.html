@@ -35,7 +35,11 @@
     <h3 *ngIf="!categoriaSelecionada">Selecione uma categoria</h3>
 
     <label for="descricao">Descrição:</label>
+
     <input type="text" id="descricao" [(ngModel)]="novoAviso.descricao" placeholder="Digite a descrição" />
+    
+    <input type="hidden" [(ngModel)]="novoAviso.idCategoria" [value]="categoriaSelecionada" />
+
     <button (click)="adicionarAviso()" class = "adicionar">Adicionar</button>
   </div>
 

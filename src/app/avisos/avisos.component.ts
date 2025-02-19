@@ -70,6 +70,8 @@ export class AvisosComponent implements OnInit {
   }
 
   adicionarAviso() {
+    this.novoAviso.idCategoria = Number(this.categoriaSelecionada);
+    
     if (!this.novoAviso.descricao) return;
     this.avisoService.adicionarAviso(this.novoAviso).subscribe((aviso) => {     
     this.novoAviso = {idCategoria: 0 , descricao: '' };
