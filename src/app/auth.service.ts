@@ -65,7 +65,7 @@ export class AuthService {
     try {
       const base64Payload = token.split('.')[1];
       const decodedPayload = atob(base64Payload); 
-      console.log(1);
+      //console.log(1);
       return JSON.parse(decodedPayload); 
     } catch (error) {
       console.error('Erro ao processar o token:', error);

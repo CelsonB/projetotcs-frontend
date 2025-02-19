@@ -27,14 +27,14 @@ export class AvisosListaComponent implements OnInit {
   constructor(private avisoService: AvisoService, private categoriaService: CategoriaService) {}
 
   ngOnInit() {
-    //this.carregarCategorias();
+    this.carregarCategorias();
   }
 
   carregarCategorias() {
     this.categoriaService.getCategorias().subscribe(
       (data: Categoria[]) => {
         this.categorias = data;
-        this.carregarAvisos(); 
+       // this.carregarAvisos(); 
       },
       (error) => {
         console.error('Erro ao carregar categorias', error);
