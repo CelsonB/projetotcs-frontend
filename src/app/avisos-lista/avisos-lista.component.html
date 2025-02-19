@@ -1,25 +1,25 @@
 <div class="container">
-  <h2>Lista de Avisos</h2>
+  <h2 class="titulo">Lista de Avisos</h2>
 
   <!-- Dropdown para selecionar categoria -->
-  <div class="categoria-select">
-    <label for="categoria">Filtrar por Categoria:</label>
-    <select [(ngModel)]="categoriaSelecionada" (change)="filtrarAvisos()">
-      <option [value]="null">Todas as categorias</option>
-      <option *ngFor="let categoria of categorias" [value]="categoria.id">
-        {{ categoria.nome }}
-      </option>
-    </select>
-  </div>
+  <label for="categoria">Selecione uma categoria:</label>
+  <select id="categoria" [(ngModel)]="categoriaSelecionada" (change)="filtrarAvisosPorCategoria()">
+    <option value="">Nenhuma categoria selecionada</option>
+    <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
+  </select>
 
   <!-- Lista de avisos filtrados -->
-  <ul class="avisos-list">
-    <li *ngFor="let aviso of avisosFiltrados" class="aviso-item">
-      <p><strong>Categoria:</strong> {{ getCategoriaNome(aviso.idCategoria) }}</p>
-      <p><strong>Descrição:</strong> {{ aviso.descricao }}</p>
-    </li>
+  
+  <strong>Categoria selecionada:</strong> {{ nomeCategoriaSelecionada}} <br>
+
+  <ul class="avisos-lista">
+    
+    <ul  *ngFor="let aviso of avisosFiltrados" class="aviso-item">
+      
+      <strong>Descrição:</strong> {{ aviso.descricao }}
+    </ul >
   </ul>
 
-  <!-- Mensagem caso não existam avisos -->
+  <!-- Caso não existam avisos -->
   <p *ngIf="avisosFiltrados.length === 0">Nenhum aviso encontrado para esta categoria.</p>
 </div>

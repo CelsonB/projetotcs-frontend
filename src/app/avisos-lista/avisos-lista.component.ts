@@ -42,6 +42,9 @@ export class AvisosListaComponent implements OnInit {
     );
   }
 
+
+  
+
   carregarAvisos() {
     this.avisoService.listarAvisos().subscribe(
       (data: Aviso[]) => {
@@ -53,11 +56,33 @@ export class AvisosListaComponent implements OnInit {
       }
     );
   }
+    
+
+  filtrarAvisosPorCategoria() {
+    if (this.categoriaSelecionada) {
+      this.avisoService.listarAvisosPorCategoria(Number(this.categoriaSelecionada)).subscribe(
+        (data: Aviso[]) => {
+          this.avisosFiltrados = data;
+        },
+        (error) => {
+          console.error('Erro ao filtrar avisos por categoria', error);
+        }
+      );
+    } else {
+      this.carregarAvisos();
+    }
+  }
+  
 
   getCategoriaNome(idCategoria: number): string {
     return this.categorias.find(cat => cat.id === idCategoria)?.nome || 'Desconhecida';
   }
 
+  get nomeCategoriaSelecionada(): string {
+    const categoria = this.categorias.find(c => c.id === Number(this.categoriaSelecionada));
+    return categoria ? categoria.nome : 'Desconhecida';
+  }
+  
   filtrarAvisos() {
     this.avisosFiltrados = this.categoriaSelecionada
       ? this.avisos.filter(aviso => aviso.idCategoria === Number(this.categoriaSelecionada))

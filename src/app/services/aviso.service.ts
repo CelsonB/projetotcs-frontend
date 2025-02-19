@@ -51,6 +51,11 @@ export class AvisoService {
     return this.http.get<Aviso[]>(this.apiUrl,{headers});
   }
 
+  listarAvisosPorCategoria(idCategoria: number): Observable<Aviso[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Aviso[]>(`${this.apiUrl}/${idCategoria}`, { headers });
+  }
+
   adicionarAviso(aviso: NovoAviso): Observable<Aviso> {
     const headers = this.getHeaders();
 

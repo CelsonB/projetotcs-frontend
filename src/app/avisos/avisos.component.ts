@@ -26,13 +26,17 @@ export class AvisosComponent implements OnInit {
   avisos: Aviso[] = [];
   categorias: Categoria[] = [];
   
+  
+  avisosFiltrados: Aviso[] = [];
+  categoriaSelecionada: number | string = '';
+
   novoAviso: NovoAviso = {idCategoria: 0, descricao: '' };
   avisoParaAtualizar: Aviso | null = null;
 
   constructor(private avisoService: AvisoService, private categoriaService :CategoriaService) {}
 
   ngOnInit() {
-    this.carregarAvisos();
+    //this.carregarAvisos();
     this.carregarCategorias();
   }
 
@@ -48,27 +52,38 @@ export class AvisosComponent implements OnInit {
       }
     );
   }
+  
+  carregarAvisosPorCategoria() {
+    if (!this.categoriaSelecionada) {
+      this.avisosFiltrados = [];
+      return;
+    }
+  
+    this.avisoService.listarAvisosPorCategoria(Number(this.categoriaSelecionada)).subscribe(
+      (data: Aviso[]) => {
+        this.avisosFiltrados = data;
+      },
+      (error) => {
+        console.error('Erro ao carregar avisos', error);
+      }
+    );
+  }
+
+  adicionarAviso() {
+    if (!this.novoAviso.descricao) return;
+    this.avisoService.adicionarAviso(this.novoAviso).subscribe((aviso) => {     
+    this.novoAviso = {idCategoria: 0 , descricao: '' };
+    this.carregarAvisosPorCategoria();
+     
+    });
+  
+  }
 
   getCategoriaNome(idCategoria: number): string {
     const categoria = this.categorias.find(cat => cat.id === idCategoria);
     return categoria ? categoria.nome : 'Desconhecida';
   }
   
-  carregarAvisos() {
-    this.avisoService.listarAvisos().subscribe((data) => {
-      this.avisos = data;
-    });
-  }
-
-  adicionarAviso() {
-    if (!this.novoAviso.descricao) return;
-
-    this.avisoService.adicionarAviso(this.novoAviso).subscribe((aviso) => {
-      this.avisos.push(aviso);
-      this.novoAviso = {idCategoria: 0 , descricao: '' };
-    });
-  }
-
   prepararAtualizacao(aviso: Aviso) {
     this.avisoParaAtualizar = { ...aviso };
   }
@@ -76,9 +91,11 @@ export class AvisosComponent implements OnInit {
   atualizarAviso() {
     if (!this.avisoParaAtualizar) return;
     this.avisoService.atualizarAviso(this.avisoParaAtualizar).subscribe(() => {
-      this.carregarAvisos();
+    
       this.avisoParaAtualizar = null;
+      this.carregarAvisosPorCategoria();
     });
+
   }
 
   cancelarAtualizacao() {
@@ -87,7 +104,14 @@ export class AvisosComponent implements OnInit {
 
   deletarAviso(id: number) {
     this.avisoService.deletarAviso(id).subscribe(() => {
-      this.avisos = this.avisos.filter((aviso) => aviso.id !== id);
+      this.carregarAvisosPorCategoria();
     });
+
   }
+
+  get nomeCategoriaSelecionada(): string {
+    const categoria = this.categorias.find(c => c.id === Number(this.categoriaSelecionada));
+    return categoria ? categoria.nome : 'Desconhecida';
+  }
+  
 }

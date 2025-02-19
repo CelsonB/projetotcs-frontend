@@ -13,6 +13,10 @@
     <a href="/cadastrar" style="color:white; margin:20px">Cadastro</a>
     <a href="/categorias" style="color:white; margin:20px" >Categorias </a>
     <a href="/perfil" style="color:white; margin:20px" >Perfil </a>
+
+    
+    <a *ngIf="authService.isAdminUser()" href="/avisos" style="color:white; margin:20px">Gerenciar avisos</a>
+    <a  href="/avisosLista" style="color:white; margin:20px" >Avisos</a>
   </div>
  
 

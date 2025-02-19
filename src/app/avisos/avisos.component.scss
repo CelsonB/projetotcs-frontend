@@ -33,19 +33,26 @@
     border-radius: 5px;
     cursor: pointer;
     color: white;
+    background-color: #007bff;;
+  }
+
+  .botoes-container {
+    display: flex;
+    gap: 10px; /* Espaço entre os botões */
   }
   
-  button:nth-child(1) {
-    background: #28a745;
+  .atualizar{
+    background: #17771c;
   }
-  
+
+  .deletar{
+    background: #dc3545;
+  }
   button:nth-child(2) {
     background: #ffc107;
   }
   
-  button:nth-child(3) {
-    background: #dc3545;
-  }
+
   
   .avisos-list {
     list-style: none;
@@ -53,13 +60,13 @@
   }
   
   .aviso-item {
-    background: white;
+    display: flex;
+    justify-content: space-between; /* Separa o texto dos botões */
+    align-items: center;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #ddd;
   }
-  
+
   button {
     margin-right: 5px;
   }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,13 +13,16 @@ export class AuthService {
 
 
   private tokenKey = 'authToken';
-
+  private isAdmin = false;
   private emailLogado = "";
   constructor(private http: HttpClient, private router: Router) {}
 
    login(email: string, password: string) {
+
  	 const body = { "email": email, "senha": password};
+
    console.log(body);
+
     return this.http.post(`${this.apiUrl}/login`, body).subscribe(
       (response: any) => {
         if (response.token) {
@@ -27,11 +31,12 @@ export class AuthService {
           this.setToken(response.token);
           this.setUserEmail(email);
           
-          if (response.Admin) {
+          if (this.isAdminUser()) {
+            this.isAdmin = response.admin;
             alert('Bem-vindo, administrador!');
-            this.router.navigate(['/lista']); // Redirecionar para a área de admin
+            this.router.navigate(['/avisosLista']); // Redirecionar para a área de admin
           } else {
-            this.router.navigate(['/perfil']); // Redirecionar para o perfil normal
+            this.router.navigate(['/avisosLista']); // Redirecionar para o perfil normal
           }
 
 
@@ -43,6 +48,31 @@ export class AuthService {
       }
     );
   }
+
+  isAdminUser(): boolean {
+    
+    const token = this.getToken();
+    if (token) {
+      const payload = this.getPayload(token);
+      return payload ? payload.admin === true : false;
+    }
+    return false;
+  }
+
+
+  //decoder feito por mim mesmo pq eu não quero instalar mais uma biblioteca na ultima entrega. 
+  private getPayload(token: string): any {
+    try {
+      const base64Payload = token.split('.')[1];
+      const decodedPayload = atob(base64Payload); 
+      console.log(1);
+      return JSON.parse(decodedPayload); 
+    } catch (error) {
+      console.error('Erro ao processar o token:', error);
+      return null;
+    }
+  }
+
 
   private setUserEmail(email: string): void {
     localStorage.setItem(this.emailLogado, email);

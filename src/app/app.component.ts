@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { AuthService } from './auth.service';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -15,11 +17,10 @@ import { PerfilComponent } from './perfil/perfil.component';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    
+    CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-
     LoginComponent,
     PerfilComponent
     ],
@@ -30,6 +31,9 @@ import { PerfilComponent } from './perfil/perfil.component';
 
 
 
+
 export class AppComponent {
+  constructor(public authService: AuthService) {}
+  
   title = 'projetotcs-frontend';
 }

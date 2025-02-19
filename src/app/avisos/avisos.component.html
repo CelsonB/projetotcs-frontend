@@ -1,33 +1,50 @@
 <div class="container">
-  <h2>Gerenciamento de Avisos</h2>
+  <h2 class="title">Gerenciar avisos</h2>
 
-  <!-- Formulário para cadastrar novo aviso -->
-  <div class="nova-aviso">
-    <h3>Cadastrar Aviso</h3>
-    <select [(ngModel)]="novoAviso.idCategoria">
-      <option value="" disabled selected>Selecione uma categoria</option>
+  <!-- Seleção de categoria -->
+  <div class="filtro-categoria">
+    <label for="categoria">Selecionar Categoria:</label>
+    <select id="categoria" [(ngModel)]="categoriaSelecionada" (change)="carregarAvisosPorCategoria()">
+      <option value="">Selecione uma categoria</option>
       <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
     </select>
-    <textarea [(ngModel)]="novoAviso.descricao" placeholder="Descrição do aviso"></textarea>
-    <button (click)="adicionarAviso()">Adicionar</button>
   </div>
 
-  <!-- Formulário para atualizar aviso -->
-  <div class="atualiza-aviso" *ngIf="avisoParaAtualizar">
-    <h3>Atualizar Aviso</h3>
-    <textarea [(ngModel)]="avisoParaAtualizar.descricao"></textarea>
-    <button (click)="atualizarAviso()">Atualizar</button>
-    <button class="cancelar" (click)="cancelarAtualizacao()">Cancelar</button>
-  </div>
+  <!-- Exibir nome da categoria selecionada -->
+  <h3 *ngIf="categoriaSelecionada">Avisos da Categoria: {{ nomeCategoriaSelecionada }}</h3>
 
-  <!-- Lista de avisos -->
-  <h3>Lista de Avisos</h3>
+  <!-- Lista de avisos filtrados -->
   <ul class="avisos-list">
-    <li *ngFor="let aviso of avisos" class="aviso-item">
-      <p><strong>Categoria:</strong> {{ getCategoriaNome(aviso.idCategoria) }}</p>
-      <p><strong>Descrição:</strong> {{ aviso.descricao }}</p>
-      <button class="atualizar" (click)="prepararAtualizacao(aviso)">Atualizar</button>
-      <button class="deletar" (click)="deletarAviso(aviso.id)">Deletar</button>
+    <li *ngFor="let aviso of avisosFiltrados" class="aviso-item">
+      <span>{{ aviso.descricao }}</span>
+
+      <div class="botoes-container">
+        <button (click)="prepararAtualizacao(aviso)">Editar</button>
+        <button (click)="deletarAviso(aviso.id)" class="deletar">Excluir</button>
+      </div>
     </li>
   </ul>
+
+  <!-- Mensagem caso não haja avisos para a categoria -->
+  <p *ngIf="avisosFiltrados.length === 0 && categoriaSelecionada">Nenhum aviso encontrado para esta categoria.</p>
+
+  <!-- Formulário para adicionar um novo aviso -->
+  <div class="novo-aviso" *ngIf="!avisoParaAtualizar">
+
+    <h3 *ngIf="categoriaSelecionada" class = "adicionar-texto">Adicionar Novo Aviso na categoria: {{ nomeCategoriaSelecionada }}</h3>
+    <h3 *ngIf="!categoriaSelecionada">Selecione uma categoria</h3>
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" [(ngModel)]="novoAviso.descricao" placeholder="Digite a descrição" />
+    <button (click)="adicionarAviso()" class = "adicionar">Adicionar</button>
+  </div>
+
+  <!-- Formulário para atualizar um aviso -->
+  <div class="novo-aviso" *ngIf="avisoParaAtualizar" >
+    <h3>Atualizar Aviso</h3>
+    <label for="descricaoAtualizar">Descrição:</label>
+    <input type="text" id="descricaoAtualizar" [(ngModel)]="avisoParaAtualizar.descricao" />
+    <button class = "atualizar"(click)="atualizarAviso()" class = "atualizar">Salvar</button>
+    <button (click)="cancelarAtualizacao()" >Cancelar</button>
+  </div>
 </div>
