@@ -1,30 +1,33 @@
 <div class="container">
-    <h2 class="avisos-title">Avisos</h2>
-  
-    <!-- Formulário para adicionar novo aviso -->
-    <div class="novo-aviso">
-      <input type="text" [(ngModel)]="novoAviso.titulo" placeholder="Título do aviso" />
-      <textarea [(ngModel)]="novoAviso.descricao" placeholder="Descrição do aviso"></textarea>
-      <button (click)="adicionarAviso()">Adicionar</button>
-    </div>
-  
-    <!-- Formulário para atualizar aviso existente -->
-    <div class="atualiza-aviso" *ngIf="avisoParaAtualizar">
-      <input type="text" [(ngModel)]="avisoParaAtualizar.titulo" placeholder="Atualizar título" />
-      <textarea [(ngModel)]="avisoParaAtualizar.descricao" placeholder="Atualizar descrição"></textarea>
-      <button (click)="atualizarAviso()">Atualizar</button>
-      <button (click)="cancelarAtualizacao()">Cancelar</button>
-    </div>
-  
-    <!-- Lista de avisos -->
-    <ul class="avisos-list">
-      <li *ngFor="let aviso of avisos; let i = index" class="aviso-item">
-        <h3>{{ aviso.titulo }}</h3>
-        <p>{{ aviso.descricao }}</p>
-        <small>Criado em: {{ aviso.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</small>
-        <br />
-        <button (click)="prepararAtualizacao(aviso)">Atualizar</button>
-        <button (click)="deletarAviso(aviso.id)">Deletar</button>
-      </li>
-    </ul>
+  <h2>Gerenciamento de Avisos</h2>
+
+  <!-- Formulário para cadastrar novo aviso -->
+  <div class="nova-aviso">
+    <h3>Cadastrar Aviso</h3>
+    <select [(ngModel)]="novoAviso.idCategoria">
+      <option value="" disabled selected>Selecione uma categoria</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
+    </select>
+    <textarea [(ngModel)]="novoAviso.descricao" placeholder="Descrição do aviso"></textarea>
+    <button (click)="adicionarAviso()">Adicionar</button>
   </div>
+
+  <!-- Formulário para atualizar aviso -->
+  <div class="atualiza-aviso" *ngIf="avisoParaAtualizar">
+    <h3>Atualizar Aviso</h3>
+    <textarea [(ngModel)]="avisoParaAtualizar.descricao"></textarea>
+    <button (click)="atualizarAviso()">Atualizar</button>
+    <button class="cancelar" (click)="cancelarAtualizacao()">Cancelar</button>
+  </div>
+
+  <!-- Lista de avisos -->
+  <h3>Lista de Avisos</h3>
+  <ul class="avisos-list">
+    <li *ngFor="let aviso of avisos" class="aviso-item">
+      <p><strong>Categoria:</strong> {{ getCategoriaNome(aviso.idCategoria) }}</p>
+      <p><strong>Descrição:</strong> {{ aviso.descricao }}</p>
+      <button class="atualizar" (click)="prepararAtualizacao(aviso)">Atualizar</button>
+      <button class="deletar" (click)="deletarAviso(aviso.id)">Deletar</button>
+    </li>
+  </ul>
+</div>

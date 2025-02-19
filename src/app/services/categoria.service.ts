@@ -38,7 +38,6 @@ export class CategoriaService {
   getCategorias(): Observable<Categoria[]> {
     const headers = this.getHeaders();
     return this.http.get<Categoria[]>(this.apiUrl, {headers}); //get usuarios com header
-
   }
 
   cadastrarCategoria(categoria: string){

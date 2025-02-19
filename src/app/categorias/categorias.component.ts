@@ -26,6 +26,8 @@ export class CategoriasComponent implements OnInit {
     this.carregarCategorias();
   }
 
+  
+
   carregarCategorias(): void {
     this.categoriaService.getCategorias().subscribe(
       (data: Categoria[]) => {
@@ -37,6 +39,11 @@ export class CategoriasComponent implements OnInit {
         alert('Erro ao carregar categorias: ' + (error.error.message || 'Erro desconhecido.'));
       }
     );
+  }
+
+  importarCategorias() : Categoria[]{
+    this.carregarCategorias();
+    return this.categorias;
   }
 
   
@@ -68,7 +75,7 @@ export class CategoriasComponent implements OnInit {
       this.categoriaService.cadastrarCategoria(this.novaCategoria).subscribe(
         () => {
           this.novaCategoria = ''; // Limpa o campo de entrada
-          this.carregarCategorias(); // Recarrega a lista de categorias
+          this.carregarCategorias(); // Recarr ega a lista de categorias
         },
         (error) => {
           console.error('Erro ao cadastrar categoria', error);

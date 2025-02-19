@@ -3,11 +3,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
+import { Categoria, CategoriaService } from './categoria.service';
 
 interface Aviso {
-  id?: number;
+  id: number;
+  idCategoria: number; 
   descricao: string;
 }
+
+interface NovoAviso {
+  idCategoria: number; 
+  descricao: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +23,7 @@ interface Aviso {
 export class AvisoService {
   private apiUrl = `${environment.apiUrl}/avisos`;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private categoriaService : CategoriaService) { }
 
 
   private getHeaders(): HttpHeaders {
@@ -30,16 +38,20 @@ export class AvisoService {
     return headers;
   }
 
+  
 
- 
-
+  getCategorias(): Observable<Categoria[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Categoria[]>(this.apiUrl, {headers}); //get usuarios com header
+  }
+  
   listarAvisos(): Observable<Aviso[]> {
     const headers = this.getHeaders();
 
     return this.http.get<Aviso[]>(this.apiUrl,{headers});
   }
 
-  adicionarAviso(aviso: Aviso): Observable<Aviso> {
+  adicionarAviso(aviso: NovoAviso): Observable<Aviso> {
     const headers = this.getHeaders();
 
     return this.http.post<Aviso>(this.apiUrl, aviso,{headers});
